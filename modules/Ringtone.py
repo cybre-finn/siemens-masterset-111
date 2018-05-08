@@ -49,7 +49,7 @@ class Ringtone:
     def playhandset(self):
         print "Starting dialtone"
         wv = wave.open(self.handsetfile)
-        device = alsaaudio.PCM(card="plug:external")
+        device = alsaaudio.PCM(card="Device")
         #device.setchannels(wv.getnchannels())
         #device.setrate(wv.getframerate())
         #device.setperiodsize(320)
@@ -64,7 +64,7 @@ class Ringtone:
 
     def playfile(self, file):
         wv = wave.open(file)
-        self.device = alsaaudio.PCM(card="pulse")
+        self.device = alsaaudio.PCM(card="ALSA")
         self.device.setchannels(wv.getnchannels())
         self.device.setrate(wv.getframerate())
         self.device.setperiodsize(320)
@@ -81,7 +81,7 @@ class Ringtone:
             self.ringfile.rewind()
         else:
             self.ringfile = wave.open(self.config["soundfiles"]["ringtone"], 'rb')
-            self.device = alsaaudio.PCM(card="pulse")
+            self.device = alsaaudio.PCM(card="ALSA")
             self.device.setchannels(self.ringfile.getnchannels())
             self.device.setrate(self.ringfile.getframerate())
             self.device.setperiodsize(320)

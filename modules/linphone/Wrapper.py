@@ -1,11 +1,11 @@
-import sys, os
+import sys, os, time
 from subprocess import Popen, PIPE
 import thread, threading
 
 class Wrapper(threading.Thread):
     linphone = None
     linphone_cmd = ["linphonec"]
-
+    CheckOngoing=False
     sip_username = None
     sip_hostname = None
     sip_password = None
@@ -27,11 +27,13 @@ class Wrapper(threading.Thread):
         if self.IsRunning():
             self.linphone.terminate()
 
-    def RegisterCallbacks(self, OnIncomingCall, OnOutgoingCall, OnRemoteHungupCall, OnSelfHungupCall):
+    def RegisterCallbacks(self, OnIncomingCall, OnOutgoingCall, OnRemoteHungupCall, OnSelfHungupCall, OnHookDial):
         self.OnIncomingCall = OnIncomingCall
         self.OnOutgoingCall = OnOutgoingCall
         self.OnRemoteHungupCall = OnRemoteHungupCall
         self.OnSelfHungupCall = OnSelfHungupCall
+	self.OnHookDial = OnHookDial
+	self.run()
 
     def run(self):
         while self.IsRunning():
@@ -43,6 +45,10 @@ class Wrapper(threading.Thread):
                 self.OnRemoteHungupCall()
             if line.find("Call ended") != -1:
                 self.OnSelfHungupCall()
+	    if line.find("No active call") != -1:
+		if self.CheckOngoing:
+			self.OnHookDial()
+			self.CheckOngoing=False
 
     def SendCmd(self, cmd):
         if self.IsRunning():
@@ -50,6 +56,7 @@ class Wrapper(threading.Thread):
 
     def SipRegister(self, username, hostname, password):
         if self.IsRunning():
+	    print username
             self.sip_username = username
             self.sip_hostname = hostname
             self.sip_password = password
@@ -68,4 +75,5 @@ class Wrapper(threading.Thread):
     def SipAnswer(self):
         if self.IsRunning():
             self.SendCmd("answer")
-
+	    self.CheckOngoing=True
+	    self.SendCmd("calls")
