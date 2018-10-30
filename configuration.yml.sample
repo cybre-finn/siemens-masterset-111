@@ -1,0 +1,13 @@
+soundfiles:
+    startup: /home/pi/siemens-masterset-111/ringtones/startup1.wav
+    shutdown: /home/pi/siemens-masterset-111/ringtones/shutdown1.wav
+    ringtone: /home/pi/siemens-masterset-111/ringtones/aselektriskbureau.wav
+    busytone: /home/pi/siemens-masterset-111/ringtones/Old_North_American_busy_signal.wav
+    timeout: /home/pi/siemens-masterset-111/ringtones/roh.wav
+    dialtone: /home/pi/siemens-masterset-111/ringtones/dialtone.wav
+
+sip:
+    username: username
+    password: password
+    hostname: example.box
+    port: 5060
