@@ -8,7 +8,6 @@ import yaml
 from threading import Timer
 from modules.Ringtone import Ringtone
 from modules.RotaryDial import RotaryDial
-from modules.Webserver import Webserver
 from modules.linphone import Wrapper
 # alternative SIP-implementation
 #from modules.pjsip.SipClient import SipClient
@@ -30,7 +29,6 @@ class TelephoneDaemon:
 
     RotaryDial = None
     SipClient = None
-    WebServer = None
 
     config = None
 
@@ -57,8 +55,6 @@ class TelephoneDaemon:
         # Start SipClient thread
         # self.SipClient.start()
 
-        # Web interface to enable remote configuration and debugging.
-        # self.Webserver = Webserver(self)
 
         raw_input("Waiting.\n")
 
