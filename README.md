@@ -20,8 +20,13 @@ It works over an USB 5V jack (and therefore with a power bank).
 [Instructions will follow...]
 
 ## Images
+Overview:
 ![img_20181030_015621](https://user-images.githubusercontent.com/20602537/47710689-b3a24880-dc33-11e8-867e-719c4c82b0e0.jpg)
+Raspberry Pi Zero W:
 ![img_20181030_015801](https://user-images.githubusercontent.com/20602537/47710690-b3a24880-dc33-11e8-9f04-9c47cc0a335e.jpg)
+H bridge
 ![img_20181030_015921](https://user-images.githubusercontent.com/20602537/47710692-b3a24880-dc33-11e8-8630-ab7a18492de9.jpg)
+Works w/ external battery
 ![img_20181030_020826](https://user-images.githubusercontent.com/20602537/47710694-b3a24880-dc33-11e8-8215-7097cb5790c7.jpg)
+closed:
 ![img_20181030_020858](https://user-images.githubusercontent.com/20602537/47710696-b43adf00-dc33-11e8-839a-c810a3492af2.jpg)
