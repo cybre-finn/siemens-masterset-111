@@ -18,9 +18,7 @@ class RotaryDial:
     # We'll be reading on/off hook events from BCM GPIO 3
     pin_onhook = 3
 
-    # After 900ms, we assume the rotation is done and we get
-    # the final digit.
-    digit_timeout = 0.3
+    digit_timeout = 0.27
 
     # We keep a counter to count each pulse.
     current_digit = 0
@@ -41,7 +39,7 @@ class RotaryDial:
 
         # Listen for rotary movements
         GPIO.setup(self.pin_rotary, GPIO.IN)
-        GPIO.add_event_detect(self.pin_rotary, GPIO.BOTH, callback = self.NumberCounter, bouncetime=100)
+        GPIO.add_event_detect(self.pin_rotary, GPIO.BOTH, callback = self.NumberCounter, bouncetime=50)
 
         # Listen for on/off hooks
         GPIO.setup(self.pin_onhook, GPIO.IN)
