@@ -2,6 +2,7 @@ from threading import Timer
 import time
 import alsaaudio
 import wave
+import RPi.GPIO as GPIO
 
 class Ringtone:
     shouldring = 0
@@ -18,7 +19,10 @@ class Ringtone:
 
     def __init__(self, config):
         self.config = config
-
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setup(26, GPIO.OUT)
+	GPIO.setup(21, GPIO.OUT)
+	
     def start(self):
         self.shouldring = 1
         self.ringtone = Timer(0, self.doring)
@@ -77,23 +81,17 @@ class Ringtone:
         wv.close()
 
     def doring(self):
-        if self.ringfile is not None:
-            self.ringfile.rewind()
-        else:
-            self.ringfile = wave.open(self.config["soundfiles"]["ringtone"], 'rb')
-            self.device = alsaaudio.PCM(card="ALSA")
-            self.device.setchannels(self.ringfile.getnchannels())
-            self.device.setrate(self.ringfile.getframerate())
-            self.device.setperiodsize(320)
-
-
+        n=0
         while self.shouldring:
-            data = self.ringfile.readframes(320)
-            while data:
-                self.device.write(data)
-                data = self.ringfile.readframes(320)
-
-            self.ringfile.rewind()
-            time.sleep(2)
-            if time.time() - 60 > self.ringstart:
-                self.stop()
+            n+=1
+            GPIO.output(26, GPIO.HIGH)
+            GPIO.output(21, GPIO.LOW)
+            time.sleep(0.025)
+            GPIO.output(26, GPIO.LOW)
+            GPIO.output(21, GPIO.HIGH)
+            time.sleep(0.025)
+            if n==24:
+                time.sleep(3)
+                n=0
+                    if time.time() - 40 > self.ringstart:
+                        self.stop()
